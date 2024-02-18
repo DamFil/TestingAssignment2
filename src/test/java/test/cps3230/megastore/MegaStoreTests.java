@@ -30,15 +30,6 @@ public class MegaStoreTests {
         driver.manage().window().maximize();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         WebElement acceptBtn = wait.until(ExpectedConditions.elementToBeClickable(By.id("CybotCookiebotDialogBodyButtonAccept")));
-
-        //5 tabs and enter
-        driver.switchTo().activeElement().sendKeys(Keys.TAB);
-        driver.switchTo().activeElement().sendKeys(Keys.TAB);
-        driver.switchTo().activeElement().sendKeys(Keys.TAB);
-        driver.switchTo().activeElement().sendKeys(Keys.TAB);
-        driver.switchTo().activeElement().sendKeys(Keys.TAB);
-        driver.switchTo().activeElement().sendKeys(Keys.ENTER);
-
         acceptBtn.click();
     }
 
