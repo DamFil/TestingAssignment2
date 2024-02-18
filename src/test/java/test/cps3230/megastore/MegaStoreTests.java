@@ -1,5 +1,7 @@
 package test.cps3230.megastore;
 
+import dev.failsafe.internal.util.Assert;
+import org.checkerframework.checker.lock.qual.GuardedByUnknown;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class AtozTests {
+public class MegaStoreTests {
     WebDriver driver;
     @BeforeEach
     public void setup() {
@@ -218,6 +220,35 @@ public class AtozTests {
         List<WebElement> productList = products.findElements(By.xpath(".//div[contains(@class, 'product')]"));
         int numProducts = productList.size();
         Assertions.assertTrue(numProducts >= 3);
+
+        // verify that clicking on the first product in the results we get the details page of that product
+        WebElement firstProduct = productList.getFirst();
+        WebElement firstProductClickable = firstProduct.findElement(By.className("product-inner-wrap"));
+        String firstProductName = firstProduct.findElement(By.className("productname")).getText();
+        firstProductClickable.click();
+
+        WebElement nameOfClickedProduct = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("name")));
+        String detailsPageName = nameOfClickedProduct.getText();
+        Assertions.assertEquals(firstProductName.toUpperCase(), detailsPageName.toUpperCase());
+    }
+
+    @Test
+    public void testSearch() {
+        WebElement searchField = driver.findElement(By.className("search-input"));
+        searchField.sendKeys("standing desk");
+        WebElement searchButton = driver.findElement(By.className("search-btn"));
+        searchButton.click();
+
+        // check that the search results container is displayed
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement searchResultsContainer = wait.until(ExpectedConditions.elementToBeClickable(By.className("s-grid-9")));
+        Assertions.assertTrue(searchResultsContainer.isDisplayed());
+
+        // check that the number of products is greater or equal to 5
+        WebElement products = searchResultsContainer.findElement(By.className("products"));
+        List<WebElement> productList = products.findElements(By.xpath(".//div[contains(@class, 'product')]"));
+        int numProducts = productList.size();
+        Assertions.assertTrue(numProducts >= 5);
 
         // verify that clicking on the first product in the results we get the details page of that product
         WebElement firstProduct = productList.getFirst();
