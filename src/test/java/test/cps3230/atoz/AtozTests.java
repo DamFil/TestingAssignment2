@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class AtozTests {
     WebDriver driver;
@@ -50,9 +51,10 @@ public class AtozTests {
         // setup
         WebElement electronicsBtn = driver.findElement(By.id("hcategory_674"));
         Actions hoverOver = new Actions(driver);
-        hoverOver.moveToElement(electronicsBtn);
-        WebElement camerasBtn = driver.findElement(By.id("headercategory1446"));
-        camerasBtn.click();
+        hoverOver.moveToElement(electronicsBtn).perform();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement camerasBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div/ul/li[@id='hcategory_1446']")));
+        hoverOver.moveToElement(camerasBtn).click().perform();
 
         Thread.sleep(10000);
     }
