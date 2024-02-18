@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class AtozTests {
     WebDriver driver;
@@ -58,9 +59,15 @@ public class AtozTests {
         hoverOver.moveToElement(camerasBtn).click().perform();
 
         // verify
-        // wait for the category name element to appear
-        WebElement categoryName = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("category-name")));
-        // check that the category name is "Cameras"
+        // wait for the product container element to appear and check that the category name is "Cameras"
+        WebElement parentContainer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("s-grid-9")));
+        WebElement categoryName = parentContainer.findElement(By.className("category-name"));
         Assertions.assertEquals(categoryName.getText(), "CAMERAS");
+
+        // verify that there are at least 3 products
+        WebElement products = parentContainer.findElement(By.className("products"));
+        List<WebElement> productList = products.findElements(By.xpath(".//div[contains(@class, 'product')]"));
+        int numProducts = productList.size();
+        Assertions.assertTrue(numProducts >= 3);
     }
 }
