@@ -1,13 +1,10 @@
 package test.cps3230.megastore;
 
-import dev.failsafe.internal.util.Assert;
-import org.checkerframework.checker.lock.qual.GuardedByUnknown;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -75,7 +72,7 @@ public class MegaStoreTests {
         Assertions.assertEquals(firstProductName.toUpperCase(), detailsPageName.toUpperCase());
     }
 
-    // cameras category
+    // SSD category
     @Test
     public void testSSDCategory() {
         // setup
@@ -112,7 +109,7 @@ public class MegaStoreTests {
         Assertions.assertEquals(firstProductName.toUpperCase(), detailsPageName.toUpperCase());
     }
 
-    // category power banks
+    // power banks category
     @Test
     public void testPowerBankCategory() {
         // setup
@@ -149,7 +146,7 @@ public class MegaStoreTests {
         Assertions.assertEquals(firstProductName.toUpperCase(), detailsPageName.toUpperCase());
     }
 
-    // category
+    // michelin tyre category
     @Test
     public void testMichellinTyresCategory() {
         // setup
@@ -186,7 +183,7 @@ public class MegaStoreTests {
         Assertions.assertEquals(firstProductName.toUpperCase(), detailsPageName.toUpperCase());
     }
 
-    // category fencing
+    // fencing category
     @Test
     public void testFaceCareCategory() {
         // setup
@@ -223,6 +220,7 @@ public class MegaStoreTests {
         Assertions.assertEquals(firstProductName.toUpperCase(), detailsPageName.toUpperCase());
     }
 
+    // test for searching
     @Test
     public void testSearch() {
         WebElement searchField = driver.findElement(By.className("search-input"));
