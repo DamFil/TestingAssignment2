@@ -69,5 +69,15 @@ public class AtozTests {
         List<WebElement> productList = products.findElements(By.xpath(".//div[contains(@class, 'product')]"));
         int numProducts = productList.size();
         Assertions.assertTrue(numProducts >= 3);
+
+        // verify that clicking on the first product in the results we get the details page of that product
+        WebElement firstProduct = productList.getFirst();
+        WebElement firstProductClickable = firstProduct.findElement(By.className("product-inner-wrap"));
+        String firstProductName = firstProduct.findElement(By.className("productname")).getText();
+        firstProductClickable.click();
+
+        WebElement nameOfClickedProduct = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("name")));
+        String detailsPageName = nameOfClickedProduct.getText();
+        Assertions.assertEquals(firstProductName.toUpperCase(), detailsPageName.toUpperCase());
     }
 }
